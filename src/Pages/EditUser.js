@@ -29,7 +29,6 @@ function EditUser(props) {
   useEffect(() => {
     if (selectedImage) {
       setImageUrl(URL.createObjectURL(selectedImage));
-      console.log("avatar", imageUrl);
     }
   }, [selectedImage]);
   const Params = useParams();
@@ -44,24 +43,15 @@ function EditUser(props) {
               last_name: response?.data?.payload?.last_name,
               email: response?.data?.payload?.email,
               password: response?.data?.payload?.password,
-              //   avatar: response?.data?.payload?.avatar,
             });
           setImageUrl(response?.data?.payload?.avatar);
-          console.log("avatar", imageUrl);
-          // response?.data?.payload
-          console.log(response.data);
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch((e) => {});
     }
   }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    // const recaptchaValue = recaptchaRef.current.getValue();
-    // this.props.onSubmit(recaptchaValue);
 
     if (!formdata.username) {
       setError(true);
@@ -272,17 +262,6 @@ function EditUser(props) {
             </div>
           </div>
         </div>
-
-        {/* <div className="col-75">
-            <input
-              type="file"
-              id="Avatar"
-              name="Avatar"
-              placeholder="Your Avatar.."
-              onChange={handleChange}
-              value={formdata.avatar}
-            />
-          </div> */}
         <div className="row">
           <div className="col-8"></div>
           <div className="col-4 text-right">

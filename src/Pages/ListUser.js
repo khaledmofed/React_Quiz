@@ -22,12 +22,8 @@ function ListUser(props) {
       .then((response) => {
         response.status && setUsers(response?.data?.payload);
         response.status && setInitialListUsers(response?.data?.payload);
-
-        console.log(response.data);
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
   useEffect(() => {
     ListOfUsers();
@@ -52,36 +48,13 @@ function ListUser(props) {
             });
 
             ListOfUsers();
-            console.log(response.data);
           })
-          .catch((e) => {
-            console.log(e);
-          });
+          .catch((e) => {});
       } else {
         swal("The user data is still there and has not been deleted");
       }
     });
   }
-  // function deleteContact(deleteid) {
-  //   return axios
-  //     .delete(`contacts/${deleteid}`)
-  //     .then((response) => {
-  //       toast.success(response?.data?.message);
-  //       props.onHide();
-  //     })
-  //     .catch((erorr) => {
-  //       setErorr(erorr.response.data.message);
-  //       toast.error(erorr);
-  //     });
-  // }
-
-  // function handleDelete() {
-  //   deleteContact(deleteid);
-  // }
-
-  console.log({
-    search,
-  });
 
   const handleChange = (e) => {
     setSearch({
@@ -96,10 +69,8 @@ function ListUser(props) {
       return;
     }
     setUsers((prev) => {
-      console.log("firsr", initialListUsers);
       const filtered = initialListUsers.filter((user) => {
         let flag = true;
-        console.log("intial", initialListUsers);
         if (user.first_name) {
           if (!user.first_name.toLowerCase().includes(search.first_name)) {
             flag = false;
@@ -117,46 +88,15 @@ function ListUser(props) {
         }
 
         return flag;
-        // return user.first_name.toLowerCase().includes(search.first_name);
-        // user.last_name.toLowerCase().includes(search.last_name) ||
-        // user.email.toLowerCase().includes(search.email)
       });
       return filtered;
     });
   }, [search]);
-  console.log("wwwwwwwwwwwwwwwwwwwwwwwwwww", users);
   const handleFilter = async (event) => {
     const searchData = {
       ...search,
       [event.target.name]: event.target.value,
     };
-
-    // await setSearch((prev) => ({
-    //   ...prev,
-    //   [event.target.name]: event.target.value,
-    // }));
-
-    // console.log("");
-
-    // let dx = users.filter(
-    //   (user) => user.first_name.indexOf(search.first_name) !== -1
-    // );
-    // console.log("if", search.first_name == "");
-    // console.log("first_name", search.first_name);
-    // if (search.first_name == "") {
-    //   setUsers(initialListUsers);
-    // } else {
-    //   console.log("dx", dx);
-    //   setUsers(dx);
-    // }
-
-    // setUsers(filterByName(search.first_name));
-    // setUsers(
-    //   initialListUsers.filter((key) => key.first_name === search.first_name)
-    // );
-    console.log(`------========== ===========--------------`, initialListUsers);
-
-    console.log(`///////////////// ${users}////////////////////`);
   };
 
   return (
@@ -200,24 +140,6 @@ function ListUser(props) {
             </InputGroup>
           </div>
         </div>
-        {/* <input
-          type="search"
-          name="first_name"
-          placeholder="first_name"
-          onChange={handleFilter}
-        />
-        <input
-          type="search"
-          name="last_name"
-          placeholder="last_name"
-          onChange={handleFilter}
-        />
-        <input
-          type="search"
-          name="email"
-          placeholder="email"
-          onChange={handleFilter}
-        /> */}
       </div>
       <Table responsive striped bordered hover>
         <thead>

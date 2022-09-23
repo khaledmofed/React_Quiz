@@ -41,24 +41,15 @@ function AddUser(props) {
       UserCrud.get(Params.id)
         .then((response) => {
           response.status && setFormdata(response?.data?.payload);
-          console.log(response.data);
         })
-        .catch((e) => {
-          console.log(e);
-        });
-
-      console.log(`wwwwwwwwwwwwwww ${Params.id} wwwwwwwwwwww`);
+        .catch((e) => {});
     } else {
       setFormdata({});
-      console.log(`wwwwwwwwwwwwwww trtrtrtrtt wwwwwwwwwwww`);
     }
   }, []);
 
   const submitHandler = async (event) => {
     event.preventDefault();
-
-    // const recaptchaValue = recaptchaRef.current.getValue();
-    // this.props.onSubmit(recaptchaValue);
 
     if (!formdata.username) {
       setError(true);
@@ -77,7 +68,6 @@ function AddUser(props) {
       setMessage(["password is required"]);
     } else {
       setError(false);
-      // setMessage("You added has been success!!!");
       const data = new FormData();
       data.append("username", formdata.username);
       data.append("first_name", formdata.first_name);
@@ -269,17 +259,6 @@ function AddUser(props) {
             </div>
           </div>
         </div>
-
-        {/* <div className="col-75">
-            <input
-              type="file"
-              id="Avatar"
-              name="Avatar"
-              placeholder="Your Avatar.."
-              onChange={handleChange}
-              value={formdata.avatar}
-            />
-          </div> */}
         <div className="row">
           <div className="col-8"></div>
           <div className="col-4 text-right">

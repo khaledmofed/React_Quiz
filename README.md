@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### ملاحظات عن العمل على الاختبار
+
+1 - لقد قمت باستخدام بعض المكتبات المساعدة في انجاز الاختبار للوصول الى المطلوب بأفضل الطرق وابسطها وهي مثل المكتبات التالية - axios - sweetalert - react-icons - react-bootstrap - react-router-dom
+
+2 - لم اهتم بالشكل الكافي في التصميم الخارجي على قدر ما كان الاهتمام في الفانكشنالتي في الرياكت ولكن ليس لدي مشكلة في التصميم الخارجي ويمكنني ان اصممه بافضل حال نظرا لعدم وجود الوقت الكافي لدي لاهتم بالتصميم
+
+3 - لم اواجه اي مشاكل في ال api وكانت تعمل بشكل جيد
+
+4 - شكرا جزيلا لكم
