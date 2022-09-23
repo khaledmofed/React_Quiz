@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function EditUser(props) {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [formdata, setFormdata] = useState({
@@ -65,22 +65,21 @@ function EditUser(props) {
 
     if (!formdata.username) {
       setError(true);
-      setMessage("username is required");
+      setMessage(["username is required"]);
     } else if (!formdata.first_name) {
       setError(true);
-      setMessage("first name is required");
+      setMessage(["first name is required"]);
     } else if (!formdata.last_name) {
       setError(true);
-      setMessage("last name is required");
+      setMessage(["last name is required"]);
     } else if (!formdata.email) {
       setError(true);
-      setMessage("Email is required");
+      setMessage(["Email is required"]);
     } else if (!formdata.password) {
       setError(true);
-      setMessage("password is required");
+      setMessage(["password is required"]);
     } else {
       setError(false);
-      setMessage("Your Edit has been success!!!");
       const data = new FormData();
       data.append("username", formdata.username);
       data.append("first_name", formdata.first_name);
@@ -109,6 +108,16 @@ function EditUser(props) {
         })
         .catch((erorr) => {
           setError(erorr.response.data.message);
+          const firstNameErr = erorr?.response?.data?.payload?.first_name ?? [];
+          const lastNameErrs = erorr?.response?.data?.payload?.last_name ?? [];
+          const emailErrs = erorr?.response?.data?.payload?.email ?? [];
+          const usernameErrs = erorr?.response?.data?.payload?.username ?? [];
+          setMessage([
+            ...firstNameErr,
+            ...lastNameErrs,
+            ...emailErrs,
+            ...usernameErrs,
+          ]);
         });
     }
   };
@@ -121,9 +130,13 @@ function EditUser(props) {
   };
   const handleAlerts = () => {
     if (error && message) {
-      return <div className="alert alert-danger mt-4">{message}</div>;
-    } else if (!error && message) {
-      return <div className="alert alert-success mt-4">{message}</div>;
+      return (
+        <div className="alert alert-danger mt-4">
+          {message.map((msg) => (
+            <li>{msg}</li>
+          ))}
+        </div>
+      );
     } else {
       return null;
     }

@@ -9,7 +9,7 @@ function AddUser(props) {
   const navigate = useNavigate();
 
   const [error, setError] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [formdata, setFormdata] = useState({
@@ -54,7 +54,7 @@ function AddUser(props) {
     }
   }, []);
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     // const recaptchaValue = recaptchaRef.current.getValue();
@@ -62,22 +62,22 @@ function AddUser(props) {
 
     if (!formdata.username) {
       setError(true);
-      setMessage("username is required");
+      setMessage(["username is required"]);
     } else if (!formdata.first_name) {
       setError(true);
-      setMessage("first name is required");
+      setMessage(["first name is required"]);
     } else if (!formdata.last_name) {
       setError(true);
-      setMessage("last name is required");
+      setMessage(["last name is required"]);
     } else if (!formdata.email) {
       setError(true);
-      setMessage("Email is required");
+      setMessage(["Email is required"]);
     } else if (!formdata.password) {
       setError(true);
-      setMessage("password is required");
+      setMessage(["password is required"]);
     } else {
       setError(false);
-      setMessage("You added has been success!!!");
+      // setMessage("You added has been success!!!");
       const data = new FormData();
       data.append("username", formdata.username);
       data.append("first_name", formdata.first_name);
@@ -105,6 +105,16 @@ function AddUser(props) {
         })
         .catch((erorr) => {
           setError(erorr.response.data.message);
+          const firstNameErr = erorr?.response?.data?.payload?.first_name ?? [];
+          const lastNameErrs = erorr?.response?.data?.payload?.last_name ?? [];
+          const emailErrs = erorr?.response?.data?.payload?.email ?? [];
+          const usernameErrs = erorr?.response?.data?.payload?.username ?? [];
+          setMessage([
+            ...firstNameErr,
+            ...lastNameErrs,
+            ...emailErrs,
+            ...usernameErrs,
+          ]);
         });
     }
   };
@@ -117,9 +127,13 @@ function AddUser(props) {
   };
   const handleAlerts = () => {
     if (error && message) {
-      return <div className="alert alert-danger mt-4">{message}</div>;
-    } else if (!error && message) {
-      return <div className="alert alert-success mt-4">{message}</div>;
+      return (
+        <div className="alert alert-danger mt-4">
+          {message.map((msg) => (
+            <li>{msg}</li>
+          ))}
+        </div>
+      );
     } else {
       return null;
     }
@@ -133,6 +147,7 @@ function AddUser(props) {
               <div className="col-12">
                 <h5 className="title-section">New User Details</h5>
               </div>
+
               <div className="col-6">
                 <div className="mb-3 input-group">
                   <span className="input-group-text">User Name</span>
@@ -212,6 +227,7 @@ function AddUser(props) {
                   />
                 </div>
               </div>
+              <div className="col-12">{handleAlerts()}</div>
             </div>
           </div>
           <div className="col-4">
@@ -276,7 +292,6 @@ function AddUser(props) {
           </div>
         </div>
       </form>
-      {handleAlerts()}
     </div>
   );
 }
